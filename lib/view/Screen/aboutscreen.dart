@@ -12,7 +12,7 @@ class AboutScreen extends StatelessWidget {
     UserController userController = Get.find<UserController>();
     return Scaffold(
         appBar: AppBar(
-            title: const Text("SihProject",
+            title: const Text("Kritrima Tattva",
                 style: TextStyle(
                     // color: AppColor.maincolor,
                     fontSize: 16,

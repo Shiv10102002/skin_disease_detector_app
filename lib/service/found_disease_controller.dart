@@ -8,6 +8,7 @@ class FoundDiseaseController extends GetxController {
   final d.Dio _dio = d.Dio();
   final RxBool uploading = false.obs;
   final RxMap resData = {}.obs;
+  
 
   Future<void> fetchData(File pickedImage) async {
     uploading.value = true;

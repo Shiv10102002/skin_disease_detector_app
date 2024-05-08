@@ -29,7 +29,7 @@ class _SignupScreenState extends State<LogingScreen> {
         appBar: AppBar(
           // actions: [],
           title: Text(
-            "SihProject",
+            "Kritrima Tattva",
             style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

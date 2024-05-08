@@ -5,7 +5,7 @@ import 'package:sihproject/model/community_post_model.dart';
 
 class CommunityController extends GetxController {
   final RxList<CommunityPost> communityPosts = <CommunityPost>[].obs;
-
+  final RxBool uploading = false.obs;
   // @override
   // void onInit() {
   //   super.onInit();
@@ -14,6 +14,7 @@ class CommunityController extends GetxController {
 
   void fetchCommunityPosts() async {
     try {
+      uploading.value = true;
       final QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('CommunityPost').get();
 
@@ -22,8 +23,10 @@ class CommunityController extends GetxController {
         final data = doc.data() as Map<String, dynamic>;
         return CommunityPost.fromMap(data);
       }).toList());
+      uploading.value = false;
     } catch (error) {
       debugPrint('Error fetching community posts: $error');
+      uploading.value = false;
     }
   }
 }

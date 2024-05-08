@@ -200,6 +200,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sihproject/constants/colors.dart';
+import 'package:sihproject/service/found_disease_controller.dart';
 import 'package:sihproject/view/Screen/aboutscreen.dart';
 import 'package:sihproject/view/Screen/community_screen.dart';
 import 'package:sihproject/view/Screen/homescreen.dart';
@@ -215,6 +216,8 @@ class HomeController extends GetxController {
 
 class Home extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
+
+  final FoundDiseaseController dcontroller = Get.put(FoundDiseaseController());
 
    Home({super.key});
   // final CommunityController comcon = Get.put(CommunityController());
@@ -244,13 +247,13 @@ class Home extends StatelessWidget {
       body: Obx(() {
         switch (controller.currentIndex.value) {
           case 0:
-            return const HomeScreen();
+            return dcontroller.uploading.value == false ?  const HomeScreen(): const SizedBox();
           case 1:
-            return CommunityScreen();
+            return dcontroller.uploading.value == false ? CommunityScreen():const SizedBox();
           case 2:
-            return const MyPostScreen();
+            return dcontroller.uploading.value == false ? const MyPostScreen():const SizedBox();
           case 3:
-            return const AboutScreen();
+            return  dcontroller.uploading.value == false ? const AboutScreen():const SizedBox();
           default:
             return const SizedBox();
         }

@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title:const  Text(
             "Home",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),

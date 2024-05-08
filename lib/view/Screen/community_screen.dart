@@ -110,6 +110,7 @@ import 'package:get/get.dart';
 import 'package:sihproject/constants/colors.dart';
 import 'package:sihproject/model/community_post_model.dart';
 import 'package:sihproject/service/community_controller.dart';
+import 'package:sihproject/service/post_controller.dart';
 import 'package:sihproject/view/Widgets/community_post.dart';
 
 import 'package:sihproject/view/Widgets/drawer.dart';
@@ -118,11 +119,12 @@ import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
 class CommunityScreen extends StatelessWidget {
   final CommunityController communityController =
       Get.find<CommunityController>();
-
+ 
   CommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+     
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -136,6 +138,7 @@ class CommunityScreen extends StatelessWidget {
           backgroundColor: AppColor.maincolor,
           isExtended: true,
           onPressed: () {
+            Get.lazyPut(() => PostController());
             Get.to(() =>  CommunityFormat());
           },
           shape:
@@ -151,9 +154,15 @@ class CommunityScreen extends StatelessWidget {
           ),
         ),
         body: Obx(() {
-          if (communityController.communityPosts.isEmpty) {
+          if(communityController.uploading.value==true){
             return const Center(
               child: CircularProgressIndicator(),
+            );
+          }
+
+          if (communityController.communityPosts.isEmpty) {
+            return const Center(
+              child: Text("No Post Available"),
             );
           } else {
             return ListView.builder(

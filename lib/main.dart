@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Your App Name',
+        title: 'Skin Desease Detector',
         theme: ThemeData(
             // Your theme data
             ),

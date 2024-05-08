@@ -13,7 +13,8 @@ class FoundDesease extends StatelessWidget {
 
   FoundDesease({Key? key, required this.pickedImage}) : super(key: key);
 
-  final FoundDiseaseController _controller = Get.put(FoundDiseaseController());
+  final FoundDiseaseController _controller = Get.find<FoundDiseaseController>();
+  // final FoundDiseaseController _controller = Get.put(FoundDiseaseController());
 
   @override
   Widget build(BuildContext context) {
