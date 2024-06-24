@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sihproject/constants/colors.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+// import 'package:sihproject/constants/colors.dart';
 
 class PostDeseas extends StatefulWidget {
   const PostDeseas({super.key, required this.onImagePicked});

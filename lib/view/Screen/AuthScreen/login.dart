@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/userdata_controller.dart';
-import 'package:sihproject/view/Screen/AuthScreen/signup.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/userdata_controller.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/userdata_controller.dart';
+// import 'package:sihproject/view/Screen/AuthScreen/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sihproject/view/Screen/home.dart';
+import 'package:kritrima_tattva/view/Screen/AuthScreen/signup.dart';
+import 'package:kritrima_tattva/view/Screen/home.dart';
+// import 'package:sihproject/view/Screen/home.dart';
 
 class LogingScreen extends StatefulWidget {
   const LogingScreen({super.key});

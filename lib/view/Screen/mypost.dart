@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/post_controller.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
-import 'package:sihproject/view/Widgets/community_post.dart';
-import 'package:sihproject/view/Widgets/drawer.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/post_controller.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/view/Widgets/community_post.dart';
+import 'package:kritrima_tattva/view/Widgets/drawer.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/post_controller.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/view/Widgets/community_post.dart';
+// import 'package:sihproject/view/Widgets/drawer.dart';
 
 class MyPostScreen extends StatefulWidget {
   const MyPostScreen({super.key});

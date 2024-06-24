@@ -107,24 +107,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/model/community_post_model.dart';
-import 'package:sihproject/service/community_controller.dart';
-import 'package:sihproject/service/post_controller.dart';
-import 'package:sihproject/view/Widgets/community_post.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/model/community_post_model.dart';
+import 'package:kritrima_tattva/service/community_controller.dart';
+import 'package:kritrima_tattva/service/post_controller.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/view/Widgets/community_post.dart';
+import 'package:kritrima_tattva/view/Widgets/drawer.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/model/community_post_model.dart';
+// import 'package:sihproject/service/community_controller.dart';
+// import 'package:sihproject/service/post_controller.dart';
+// import 'package:sihproject/view/Widgets/community_post.dart';
 
-import 'package:sihproject/view/Widgets/drawer.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/view/Widgets/drawer.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
 
 class CommunityScreen extends StatelessWidget {
   final CommunityController communityController =
       Get.find<CommunityController>();
- 
+
   CommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-     
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -139,7 +145,7 @@ class CommunityScreen extends StatelessWidget {
           isExtended: true,
           onPressed: () {
             Get.lazyPut(() => PostController());
-            Get.to(() =>  CommunityFormat());
+            Get.to(() => CommunityFormat());
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -154,7 +160,7 @@ class CommunityScreen extends StatelessWidget {
           ),
         ),
         body: Obx(() {
-          if(communityController.uploading.value==true){
+          if (communityController.uploading.value == true) {
             return const Center(
               child: CircularProgressIndicator(),
             );

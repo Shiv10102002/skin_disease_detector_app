@@ -1,10 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/answer_controller.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
-import 'package:sihproject/view/Widgets/answer_bottom_sheet.dart';
-import 'package:sihproject/view/Widgets/answer_post.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/answer_controller.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/view/Widgets/answer_bottom_sheet.dart';
+import 'package:kritrima_tattva/view/Widgets/answer_post.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/answer_controller.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/view/Widgets/answer_bottom_sheet.dart';
+// import 'package:sihproject/view/Widgets/answer_post.dart';
 
 class AnswerScreen extends StatelessWidget {
   const AnswerScreen({
@@ -29,6 +35,7 @@ class AnswerScreen extends StatelessWidget {
     });
     return Scaffold(
       bottomNavigationBar: Container(
+        margin: const EdgeInsets.only(bottom: 40),
         color: Colors.transparent,
         height: 40,
         child: Fullwidthtextbutton(
@@ -46,6 +53,7 @@ class AnswerScreen extends StatelessWidget {
           shrinkWrap: true,
           slivers: [
             SliverAppBar(
+              leading: const SizedBox(),
               leadingWidth: 40,
               // title: Text("ques"),
               backgroundColor: Colors.white,
@@ -63,13 +71,16 @@ class AnswerScreen extends StatelessWidget {
                       children: [
                         Container(
                           height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12)),
-                              image: DecorationImage(
-                                  image: NetworkImage(postimg),
-                                  fit: BoxFit.cover)),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                topRight: Radius.circular(12)),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: postimg,
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                          ),
                         ),
                         Positioned(
                           left: 20,
@@ -148,7 +159,7 @@ class AnswerScreen extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: AnswerPost(
-                              index: index,
+                                index: index,
                                 postid: postid,
                                 answer: answerController.answers[index]
                                     as Map<String, dynamic>),

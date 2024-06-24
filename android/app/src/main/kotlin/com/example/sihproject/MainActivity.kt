@@ -1,4 +1,4 @@
-package com.example.sihproject
+package com.example.KritrimaTattva
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,13 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/model/community_post_model.dart';
-import 'package:sihproject/service/answer_controller.dart';
-import 'package:sihproject/service/community_controller.dart';
-import 'package:sihproject/service/post_controller.dart';
-import 'package:sihproject/view/Screen/answer_srcren.dart';
-// import 'package:sihproject/constants/colors.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/model/community_post_model.dart';
+import 'package:kritrima_tattva/service/answer_controller.dart';
+
+import 'package:kritrima_tattva/service/post_controller.dart';
+import 'package:kritrima_tattva/view/Screen/answer_srcren.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+
 
 class CommunityPostwidget extends StatelessWidget {
   const CommunityPostwidget({
@@ -55,13 +57,17 @@ class CommunityPostwidget extends StatelessWidget {
         children: [
           Container(
             height: 200,
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12)),
-                color: Colors.blueGrey,
-                image: DecorationImage(
-                    image: NetworkImage(post.imageUrl), fit: BoxFit.cover)),
+            decoration:const BoxDecoration(
+              borderRadius:  BorderRadius.only(
+                  topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+              color: Colors.blueGrey,
+         
+            ),
+            child: CachedNetworkImage(
+              width: MediaQuery.of(context).size.width,
+              imageUrl: post.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -173,23 +179,28 @@ class CommunityPostwidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () async {
-                          Map<String, dynamic> res =
-                              await postController.toggleLike(
-                                  post.postId,
-                                  islike.value,
-                                  isdislike.value,
-                                  likelength.value,
-                                  dislikelength.value);
+                      Obx(
+                        () => IconButton(
+                            onPressed: () async {
+                              Map<String, dynamic> res =
+                                  await postController.toggleLike(
+                                      post.postId,
+                                      islike.value,
+                                      isdislike.value,
+                                      likelength.value,
+                                      dislikelength.value);
 
-                          islike.value = res['like'];
-                          isdislike.value = res['dislike'];
-                          likelength.value = res['likelength'];
-                          dislikelength.value = res['dislikelength'];
-                          Get.find<CommunityController>().fetchCommunityPosts();
-                        },
-                        icon: Obx(() => Column(
+                              islike.value = res['like'];
+                              isdislike.value = res['dislike'];
+                              likelength.value = res['likelength'];
+                              dislikelength.value = res['dislikelength'];
+                              // Get.find<CommunityController>()
+                              //     .fetchCommunityPosts();
+                            },
+                            icon:
+                                //  Obx(
+                                //   () =>
+                                Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Icon(
@@ -205,9 +216,50 @@ class CommunityPostwidget extends StatelessWidget {
                                   style: const TextStyle(color: Colors.grey),
                                 ),
                               ],
-                            )),
+                            )
+                            // ),
+                            ),
                       ),
-                      IconButton(
+                      // IconButton(
+                      //   onPressed: () async {
+                      //     Map<String, dynamic> res =
+                      //         await postController.toggleLike(
+                      //             post.postId,
+                      //             islike.value,
+                      //             isdislike.value,
+                      //             likelength.value,
+                      //             dislikelength.value);
+
+                      //     islike.value = res['like'];
+                      //     isdislike.value = res['dislike'];
+                      //     likelength.value = res['likelength'];
+                      //     dislikelength.value = res['dislikelength'];
+                      //     Get.find<CommunityController>().fetchCommunityPosts();
+                      //   },
+                      //   icon:
+                      //   //  Obx(
+                      //   //   () =>
+                      //      Column(
+                      //         mainAxisAlignment: MainAxisAlignment.start,
+                      //         children: [
+                      //           Icon(
+                      //               islike.value == false
+                      //                   ? Icons.thumb_up_alt_outlined
+                      //                   : Icons.thumb_up,
+                      //               color: islike.value == false
+                      //                   ? Colors.grey
+                      //                   : AppColor.maincolor),
+                      //           const SizedBox(width: 4),
+                      //           Text(
+                      //             "${likelength.value} Like",
+                      //             style: const TextStyle(color: Colors.grey),
+                      //           ),
+                      //         ],
+                      //       )
+                      //       // ),
+                      // ),
+                      Obx(
+                        () => IconButton(
                           onPressed: () async {
                             Map<String, dynamic> res =
                                 await postController.toggleDislike(
@@ -221,30 +273,77 @@ class CommunityPostwidget extends StatelessWidget {
                             isdislike.value = res['dislike'];
                             likelength.value = res['likeslen'];
                             dislikelength.value = res['dislikelen'];
-                            Get.find<CommunityController>()
-                                .fetchCommunityPosts();
+                            // Get.find<CommunityController>()
+                            //     .fetchCommunityPosts();
                           },
-                          icon: Obx(
-                            () => Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                isdislike.value == false
-                                    ? const Icon(
-                                        Icons.thumb_down_alt_outlined,
-                                        color: Colors.grey,
-                                      )
-                                    : Icon(
-                                        Icons.thumb_down,
-                                        color: AppColor.maincolor,
-                                      ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "${dislikelength.value} Dislike",
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                          ))
+                          icon: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              isdislike.value == false
+                                  ? const Icon(
+                                      Icons.thumb_down_alt_outlined,
+                                      color: Colors.grey,
+                                    )
+                                  : Icon(
+                                      Icons.thumb_down,
+                                      color: AppColor.maincolor,
+                                    ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "${dislikelength.value} Dislike",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      FirebaseAuth.instance.currentUser!.uid == post.userId
+                          ? IconButton(
+                              onPressed: () async {
+                                Get.to(() => CommunityFormat(
+                                      editpost: true,
+                                      desc: post.description,
+                                      ques: post.question,
+                                      postid: post.postId,
+                                    ));
+                              },
+                              icon: const Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    "Edit",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
+                      FirebaseAuth.instance.currentUser!.uid == post.userId
+                          ? IconButton(
+                              onPressed: () async {
+                                postController.deletePost(post.postId);
+                              },
+                              icon: const Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.delete,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : const SizedBox()
                     ],
                   ),
                 ),

@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/userdata_controller.dart';
-import 'package:sihproject/view/Screen/AuthScreen/login.dart';
-import 'package:sihproject/view/Screen/mypost.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/userdata_controller.dart';
+import 'package:kritrima_tattva/view/Screen/AuthScreen/login.dart';
+import 'package:kritrima_tattva/view/Screen/mypost.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/userdata_controller.dart';
+// import 'package:sihproject/view/Screen/AuthScreen/login.dart';
+// import 'package:sihproject/view/Screen/mypost.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});

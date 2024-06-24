@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sihproject/model/usermodel.dart';
+import 'package:kritrima_tattva/model/usermodel.dart';
+// import 'package:sihproject/model/usermodel.dart';
 
 class UserController extends GetxController {
   final _user = UserModel(

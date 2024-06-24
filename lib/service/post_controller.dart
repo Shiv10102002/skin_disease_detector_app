@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/model/community_post_model.dart';
-import 'package:sihproject/service/date_format.dart';
+import 'package:kritrima_tattva/model/community_post_model.dart';
+import 'package:kritrima_tattva/service/date_format.dart';
+// import 'package:sihproject/model/community_post_model.dart';
+// import 'package:sihproject/service/date_format.dart';
 
 class PostController extends GetxController {
   // var isLike = false.obs;
@@ -44,116 +46,128 @@ class PostController extends GetxController {
     });
   }
 
+  Future<Map<String, dynamic>> toggleLike(
+    String postId,
+    bool isLike,
+    bool isDislike,
+    int likelen,
+    int dislikelen,
+  ) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final communityPostRef =
+        FirebaseFirestore.instance.collection('CommunityPost').doc(postId);
 
+    try {
+      final docSnapshot = await communityPostRef.get();
+      if (docSnapshot.exists) {
+        List<dynamic> likes = docSnapshot.data()!['likes'] ?? [];
+        List<dynamic> dislikes = docSnapshot.data()!['dislikes'] ?? [];
 
-
-Future<Map<String, dynamic>> toggleLike(
-  String postId,
-  bool isLike,
-  bool isDislike,
-  int likelen,
-  int dislikelen,
-) async {
-  String userId = FirebaseAuth.instance.currentUser!.uid;
-  final communityPostRef =
-      FirebaseFirestore.instance.collection('CommunityPost').doc(postId);
-
-  try {
-    final docSnapshot = await communityPostRef.get();
-    if (docSnapshot.exists) {
-      List<dynamic> likes = docSnapshot.data()!['likes'] ?? [];
-      List<dynamic> dislikes = docSnapshot.data()!['dislikes'] ?? [];
-
-      if (likes.contains(userId)) {
-        likes.remove(userId);
-        isLike = false;
-        likelen = likes.length;
-      } else {
-        likes.add(userId);
-        likelen = likes.length;
-        isLike = true;
-        if (dislikes.contains(userId)) {
-          dislikes.remove(userId);
-          isDislike = false;
-          dislikelen = dislikes.length;
-        }
-      }
-
-      // Update the document with the modified likes and dislikes arrays
-      await communityPostRef.update({'likes': likes, 'dislikes': dislikes});
-    }
-
-    // Return a map with updated values
-    return {
-      'like': isLike,
-      'dislike': isDislike,
-      'likelength': likelen,
-      'dislikelength': dislikelen,
-    };
-  } catch (error) {
-    debugPrint('Error toggling like: $error');
-    // Handle the error and return an appropriate response
-    return {
-      'error': 'Error toggling like: $error',
-    };
-  }
-}
-
-
-
-
-
-Future<Map<String, dynamic>> toggleDislike(
-  String postId,
-  bool isLike,
-  bool isDislike,
-  int likelen,
-  int dislikelen,
-) async {
-  String userId = FirebaseAuth.instance.currentUser!.uid;
-  final communityPostRef =
-      FirebaseFirestore.instance.collection('CommunityPost').doc(postId);
-
-  try {
-    final docSnapshot = await communityPostRef.get();
-    if (docSnapshot.exists) {
-      List<dynamic> dislikes = docSnapshot.data()!['dislikes'] ?? [];
-      List<dynamic> likes = docSnapshot.data()!['likes'] ?? [];
-
-      if (dislikes.contains(userId)) {
-        dislikes.remove(userId);
-        isDislike = false;
-        dislikelen = dislikes.length;
-      } else {
-        dislikes.add(userId);
-        dislikelen = dislikes.length;
-        isDislike = true;
         if (likes.contains(userId)) {
           likes.remove(userId);
           isLike = false;
           likelen = likes.length;
+        } else {
+          likes.add(userId);
+          likelen = likes.length;
+          isLike = true;
+          if (dislikes.contains(userId)) {
+            dislikes.remove(userId);
+            isDislike = false;
+            dislikelen = dislikes.length;
+          }
         }
+
+        // Update the document with the modified likes and dislikes arrays
+        await communityPostRef.update({'likes': likes, 'dislikes': dislikes});
       }
 
-      // Update the document with the modified likes and dislikes arrays
-      await communityPostRef.update({'dislikes': dislikes, 'likes': likes});
+      // Return a map with updated values
+      return {
+        'like': isLike,
+        'dislike': isDislike,
+        'likelength': likelen,
+        'dislikelength': dislikelen,
+      };
+    } catch (error) {
+      debugPrint('Error toggling like: $error');
+      // Handle the error and return an appropriate response
+      return {
+        'error': 'Error toggling like: $error',
+      };
     }
-
-    // Return a map with updated values
-    return {
-      'like': isLike,
-      'dislike': isDislike,
-      'likeslen': likelen,
-      'dislikelen': dislikelen,
-    };
-  } catch (error) {
-    debugPrint('Error toggling dislike: $error');
-    // Handle the error and return an appropriate response
-    return {
-      'error': 'Error toggling dislike: $error',
-    };
   }
-}
 
+  Future<void> deletePost(String postId) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final communityPostRef =
+        FirebaseFirestore.instance.collection('CommunityPost').doc(postId);
 
+    try {
+      final docSnapshot = await communityPostRef.get();
+      if (docSnapshot.exists) {
+        if (docSnapshot.data()!['userId'] == userId) {
+          await communityPostRef.delete();
+          debugPrint('Post deleted successfully');
+          communityPosts.removeWhere((post) => post.postId == postId);
+        } else {
+          debugPrint('Error: Unauthorized deletion attempt');
+        }
+      }
+    } catch (error) {
+      debugPrint('Error deleting post: $error');
+    }
+  }
+
+  Future<Map<String, dynamic>> toggleDislike(
+    String postId,
+    bool isLike,
+    bool isDislike,
+    int likelen,
+    int dislikelen,
+  ) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    final communityPostRef =
+        FirebaseFirestore.instance.collection('CommunityPost').doc(postId);
+
+    try {
+      final docSnapshot = await communityPostRef.get();
+      if (docSnapshot.exists) {
+        List<dynamic> dislikes = docSnapshot.data()!['dislikes'] ?? [];
+        List<dynamic> likes = docSnapshot.data()!['likes'] ?? [];
+
+        if (dislikes.contains(userId)) {
+          dislikes.remove(userId);
+          isDislike = false;
+          dislikelen = dislikes.length;
+        } else {
+          dislikes.add(userId);
+          dislikelen = dislikes.length;
+          isDislike = true;
+          if (likes.contains(userId)) {
+            likes.remove(userId);
+            isLike = false;
+            likelen = likes.length;
+          }
+        }
+
+        // Update the document with the modified likes and dislikes arrays
+        await communityPostRef.update({'dislikes': dislikes, 'likes': likes});
+      }
+
+      // Return a map with updated values
+      return {
+        'like': isLike,
+        'dislike': isDislike,
+        'likeslen': likelen,
+        'dislikelen': dislikelen,
+      };
+    } catch (error) {
+      debugPrint('Error toggling dislike: $error');
+      // Handle the error and return an appropriate response
+      return {
+        'error': 'Error toggling dislike: $error',
+      };
+    }
+  }
 }

@@ -1,10 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
-import 'package:sihproject/view/Screen/desease_found_screen.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/view/Screen/desease_found_screen.dart';
+
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/view/Screen/desease_found_screen.dart';
 
 class SearchDeseas extends StatefulWidget {
   const SearchDeseas({super.key});
@@ -15,24 +20,78 @@ class SearchDeseas extends StatefulWidget {
 
 class _SearchDeseasState extends State<SearchDeseas> {
   File? pickedImage;
+  // pickImage(ImageSource imageType) async {
+  //   try {
+  //     final photo = await ImagePicker()
+  //         .pickImage(source: imageType, maxHeight: 300, maxWidth: 300);
+  //     if (photo == null) {
+  //       return;
+  //     }
+
+  //     final tempImage = File(photo.path);
+  //     setState(() {
+  //       pickedImage = tempImage;
+  //     });
+  //     debugPrint('data picked successfully');
+  //     // await _fetchData(pickedImage!);
+  //     Get.to(() => FoundDesease(
+  //           pickedImage: pickedImage!,
+  //         ));
+  //   } catch (error) {
+  //     debugPrint(error.toString());
+  //   }
+  // }
+
   pickImage(ImageSource imageType) async {
     try {
-      final photo = await ImagePicker().pickImage(source: imageType);
+      final photo = await ImagePicker().pickImage(
+        source: imageType,
+        
+      );
+
       if (photo == null) {
         return;
-      }
+      } else {
+        final croppedFile = await ImageCropper().cropImage(
+          sourcePath: photo.path,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9,
+          ],
+          uiSettings: [
+            AndroidUiSettings(
+                toolbarTitle: 'Cropper',
+                toolbarColor: AppColor.maincolor,
+                toolbarWidgetColor: Colors.white,
+                initAspectRatio: CropAspectRatioPreset.original,
+                lockAspectRatio: false),
+            // IOSUiSettings(
+            //   title: 'Cropper',
+            // ),
+            // WebUiSettings(
+            //   context: context,
+            // ),
+          ],
+        );
 
-      final tempImage = File(photo.path);
-      setState(() {
-        pickedImage = tempImage;
-      });
-      debugPrint('data picked successfully');
-      // await _fetchData(pickedImage!);
-      Get.to(() => FoundDesease(
-            pickedImage: pickedImage!,
-          ));
+        if (croppedFile == null) {
+          return;
+        }
+
+        final tempImage = File(croppedFile.path);
+        setState(() {
+          pickedImage = tempImage;
+        });
+
+        // Proceed with your logic
+        debugPrint('Image picked successfully');
+        Get.to(() => FoundDesease(pickedImage: pickedImage!));
+      }
     } catch (error) {
-      debugPrint(error.toString());
+      debugPrint('the error during taking picture$error');
     }
   }
 

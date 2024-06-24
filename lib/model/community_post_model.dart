@@ -1,4 +1,6 @@
-import 'package:sihproject/service/date_format.dart';
+// import 'package:sihproject/service/date_format.dart';
+
+import 'package:kritrima_tattva/service/date_format.dart';
 
 class CommunityPost {
   final String userId;

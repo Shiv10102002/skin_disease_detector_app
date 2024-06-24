@@ -88,7 +88,6 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 
-
 class Community {
   static Future<bool> postquestion(
     String ques,
@@ -119,24 +118,67 @@ class Community {
       }
 
       // Add data to the CommunityPost collection
-      await communityPosts.doc(postId).set({
-        'userId': userId,
-        'question': ques,
-        'description': desc,
-        'imageUrl': imageUrl, // URL of the uploaded image
-        'timestamp': DateTime.now(),
-        'postid': postId,
-        'userImage': userImage, // User's image URL
-        'username': username,
-        'likes': [],
-        'dislikes': [],
-        'answer': [],
-      });
+      await communityPosts.doc(postId).set(
+        {
+          'userId': userId,
+          'question': ques,
+          'description': desc,
+          'imageUrl': imageUrl, // URL of the uploaded image
+          'timestamp': DateTime.now(),
+          'postid': postId,
+          'userImage': userImage, // User's image URL
+          'username': username,
+          'likes': [],
+          'dislikes': [],
+          'answer': [],
+        },
+        SetOptions(merge: true),
+      );
       return true;
     } catch (error) {
       debugPrint("Error adding community post: $error");
       return false;
       // Throw the error for handling in the UI
+    }
+  }
+
+  //update community Post
+  static Future<bool> editCommunityPost(
+    String ques,
+    String desc,
+    XFile? image,
+    String username,
+    String userImage,
+    String postId,
+  ) async {
+    try {
+      // Get the current user's ID
+      // String userId = FirebaseAuth.instance.currentUser!.uid;
+      CollectionReference communityPosts =
+          FirebaseFirestore.instance.collection('CommunityPost');
+
+      String? imageUrl;
+      if (image != null) {
+        Uint8List compressedImage = await compressAndResizeImage(image);
+        imageUrl = await uploadImageToStorage(compressedImage, postId);
+      }
+
+      Map<String, dynamic> updateData = {
+        'question': ques,
+        'description': desc,
+        'userImage': userImage,
+        'username': username,
+      };
+
+      if (imageUrl != null) {
+        updateData['imageUrl'] = imageUrl;
+      }
+
+      await communityPosts.doc(postId).update(updateData);
+      return true;
+    } catch (error) {
+      debugPrint("Error editing community post: $error");
+      return false;
     }
   }
 

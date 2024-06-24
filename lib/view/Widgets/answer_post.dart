@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/answer_controller.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/answer_controller.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/answer_controller.dart';
 
 class AnswerPost extends StatelessWidget {
   const AnswerPost(

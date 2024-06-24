@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sihproject/constants/colors.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+// import 'package:sihproject/constants/colors.dart';
 
 class NoInterNetScreen extends StatelessWidget {
   const NoInterNetScreen({super.key});

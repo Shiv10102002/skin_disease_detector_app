@@ -1,38 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/community_controller.dart';
-import 'package:sihproject/service/community_service.dart';
-import 'package:sihproject/service/post_controller.dart';
-import 'package:sihproject/service/userdata_controller.dart';
-import 'package:sihproject/view/Widgets/postdeseas.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/community_controller.dart';
+import 'package:kritrima_tattva/service/community_service.dart';
+import 'package:kritrima_tattva/service/post_controller.dart';
+import 'package:kritrima_tattva/service/userdata_controller.dart';
+import 'package:kritrima_tattva/view/Widgets/postdeseas.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/community_controller.dart';
+// import 'package:sihproject/service/community_service.dart';
+// import 'package:sihproject/service/post_controller.dart';
+// import 'package:sihproject/service/userdata_controller.dart';
+// import 'package:sihproject/view/Widgets/postdeseas.dart';
 
 // ignore: must_be_immutable
 class CommunityFormat extends StatelessWidget {
-  CommunityFormat({super.key});
+  CommunityFormat(
+      {super.key,
+      this.editpost = false,
+      this.pickedimg,
+      this.desc = '',
+      this.ques = '',
+      this.postid = ''});
 
   final _askcommunity = GlobalKey<FormState>();
 
   TextEditingController questionController = TextEditingController();
 
   TextEditingController discController = TextEditingController();
+  String desc = "";
+  String ques = "";
 
   XFile? pickedimg;
 
   RxBool isloading = false.obs;
+  bool editpost = false;
+  String postid;
 
   @override
   Widget build(BuildContext context) {
+    if (editpost == true) {
+      discController.text = desc;
+      questionController.text = ques;
+    }
     UserController usercontroller = Get.find<UserController>();
     CommunityController comcont = Get.find<CommunityController>();
     PostController postController = Get.find<PostController>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Ask Community",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          title: Text(
+            editpost == true ? "Edit Post" : "Ask Community",
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
         body: SingleChildScrollView(
@@ -106,25 +126,45 @@ class CommunityFormat extends StatelessWidget {
                               // Check form validation
                               isloading.value = true;
                               if (_askcommunity.currentState!.validate()) {
-                                Community.postquestion(
-                                  questionController.text.toString(),
-                                  discController.text.toString(),
-                                  pickedimg,
-                                  usercontroller.user.name,
-                                  usercontroller.user.userImg,
-                                ).then((value) {
-                                  if (value == true) {
-                                    comcont.fetchCommunityPosts();
-                                    postController.fetchCommunityPosts();
-                                    Get.back();
-                                  } else {
-                                    Get.snackbar(
-                                        "Post status", "Somthing wrong");
-                                  }
-                                });
+                                editpost == false
+                                    ? Community.postquestion(
+                                        questionController.text.toString(),
+                                        discController.text.toString(),
+                                        pickedimg,
+                                        usercontroller.user.name,
+                                        usercontroller.user.userImg,
+                                      ).then((value) {
+                                        if (value == true) {
+                                          comcont.fetchCommunityPosts();
+                                          postController.fetchCommunityPosts();
+                                          Get.back();
+                                        } else {
+                                          isloading.value = false;
+                                          Get.snackbar(
+                                              "Post status", "Somthing wrong");
+                                        }
+                                      })
+                                    : Community.editCommunityPost(
+                                            questionController.text.toString(),
+                                            discController.text.toString(),
+                                            pickedimg,
+                                            usercontroller.user.name,
+                                            usercontroller.user.userImg,
+                                            postid)
+                                        .then((value) {
+                                        if (value == true) {
+                                          comcont.fetchCommunityPosts();
+                                          postController.fetchCommunityPosts();
+                                          Get.back();
+                                        } else {
+                                          isloading.value = false;
+                                          Get.snackbar("Edit Post status",
+                                              "Somthing wrong during editing the post");
+                                        }
+                                      });
                               }
                             },
-                            text: "Post",
+                            text: editpost == true ? "Edit Post" : "Creat Post",
                           )
                         : ElevatedButton(
                             style: ElevatedButton.styleFrom(

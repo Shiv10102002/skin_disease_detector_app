@@ -4,9 +4,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/found_disease_controller.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/found_disease_controller.dart';
+import 'package:kritrima_tattva/service/post_controller.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/found_disease_controller.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
 
 class FoundDesease extends StatelessWidget {
   final File pickedImage;
@@ -14,6 +18,7 @@ class FoundDesease extends StatelessWidget {
   FoundDesease({Key? key, required this.pickedImage}) : super(key: key);
 
   final FoundDiseaseController _controller = Get.find<FoundDiseaseController>();
+  
   // final FoundDiseaseController _controller = Get.put(FoundDiseaseController());
 
   @override
@@ -27,6 +32,8 @@ class FoundDesease extends StatelessWidget {
           backgroundColor: AppColor.maincolor,
           isExtended: true,
           onPressed: () {
+            Get.lazyPut(() => PostController());
+
             Get.to(() => CommunityFormat());
           },
           shape:

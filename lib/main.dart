@@ -55,12 +55,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/service/community_controller.dart';
-import 'package:sihproject/service/network_controller.dart';
-import 'package:sihproject/service/userdata_controller.dart';
-import 'package:sihproject/view/Screen/home.dart';
-import 'package:sihproject/view/Screen/AuthScreen/login.dart';
-import 'package:sihproject/view/Screen/no_internet_screen.dart';
+import 'package:kritrima_tattva/service/community_controller.dart';
+
+import 'package:kritrima_tattva/service/network_controller.dart';
+import 'package:kritrima_tattva/service/userdata_controller.dart';
+import 'package:kritrima_tattva/view/Screen/AuthScreen/login.dart';
+import 'package:kritrima_tattva/view/Screen/home.dart';
+import 'package:kritrima_tattva/view/Screen/no_internet_screen.dart';
+// import 'package:sihproject/service/community_controller.dart';
+// import 'package:sihproject/service/network_controller.dart';
+// import 'package:sihproject/service/userdata_controller.dart';
+// import 'package:sihproject/view/Screen/home.dart';
+// import 'package:sihproject/view/Screen/AuthScreen/login.dart';
+// import 'package:sihproject/view/Screen/no_internet_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

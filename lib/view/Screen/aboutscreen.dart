@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/userdata_controller.dart';
-import 'package:sihproject/view/Widgets/drawer.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/userdata_controller.dart';
+import 'package:kritrima_tattva/view/Widgets/drawer.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/userdata_controller.dart';
+// import 'package:sihproject/view/Widgets/drawer.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -33,13 +37,21 @@ class AboutScreen extends StatelessWidget {
                         height: double.infinity,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            color: AppColor.paracolor,
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image: NetworkImage(userController.user.userImg),
-                              fit: BoxFit.cover,
-                            )),
-                       
+                          color: AppColor.paracolor,
+                          borderRadius: BorderRadius.circular(8),
+                          // image: DecorationImage(
+                          //   image: NetworkImage(userController.user.userImg),
+                          //   fit: BoxFit.cover,
+                          // ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl: userController.user.userImg,
+                            fit: BoxFit.cover,
+                            // width: MediaQuery.of(context).size.width,
+                          ),
+                        ),
                       )),
                   const SizedBox(
                     width: 12,

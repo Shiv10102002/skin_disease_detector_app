@@ -199,12 +199,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sihproject/constants/colors.dart';
-import 'package:sihproject/service/found_disease_controller.dart';
-import 'package:sihproject/view/Screen/aboutscreen.dart';
-import 'package:sihproject/view/Screen/community_screen.dart';
-import 'package:sihproject/view/Screen/homescreen.dart';
-import 'package:sihproject/view/Screen/mypost.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+import 'package:kritrima_tattva/service/found_disease_controller.dart';
+import 'package:kritrima_tattva/view/Screen/aboutscreen.dart';
+import 'package:kritrima_tattva/view/Screen/community_screen.dart';
+import 'package:kritrima_tattva/view/Screen/homescreen.dart';
+import 'package:kritrima_tattva/view/Screen/mypost.dart';
+// import 'package:sihproject/constants/colors.dart';
+// import 'package:sihproject/service/found_disease_controller.dart';
+// import 'package:sihproject/view/Screen/aboutscreen.dart';
+// import 'package:sihproject/view/Screen/community_screen.dart';
+// import 'package:sihproject/view/Screen/homescreen.dart';
+// import 'package:sihproject/view/Screen/mypost.dart';
 
 class HomeController extends GetxController {
   final RxInt currentIndex = 0.obs;

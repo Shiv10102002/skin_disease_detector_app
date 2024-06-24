@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sihproject/service/answer_controller.dart';
-import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
+import 'package:kritrima_tattva/service/answer_controller.dart';
+import 'package:kritrima_tattva/view/Screen/ask_communtiy_format_page.dart';
+// import 'package:sihproject/service/answer_controller.dart';
+// import 'package:sihproject/view/Screen/ask_communtiy_format_page.dart';
 
 class AnswerBottomSheet extends StatelessWidget {
   const AnswerBottomSheet({Key? key, required this.postid}) : super(key: key);

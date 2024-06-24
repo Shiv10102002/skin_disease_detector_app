@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:sihproject/constants/colors.dart';
+import 'package:kritrima_tattva/constants/colors.dart';
+// import 'package:sihproject/constants/colors.dart';
 
 class HomepageSlider extends StatefulWidget {
   const HomepageSlider({super.key});
