@@ -20,27 +20,7 @@ class SearchDeseas extends StatefulWidget {
 
 class _SearchDeseasState extends State<SearchDeseas> {
   File? pickedImage;
-  // pickImage(ImageSource imageType) async {
-  //   try {
-  //     final photo = await ImagePicker()
-  //         .pickImage(source: imageType, maxHeight: 300, maxWidth: 300);
-  //     if (photo == null) {
-  //       return;
-  //     }
-
-  //     final tempImage = File(photo.path);
-  //     setState(() {
-  //       pickedImage = tempImage;
-  //     });
-  //     debugPrint('data picked successfully');
-  //     // await _fetchData(pickedImage!);
-  //     Get.to(() => FoundDesease(
-  //           pickedImage: pickedImage!,
-  //         ));
-  //   } catch (error) {
-  //     debugPrint(error.toString());
-  //   }
-  // }
+  
 
   pickImage(ImageSource imageType) async {
     try {
@@ -269,9 +249,11 @@ class _SearchDeseasState extends State<SearchDeseas> {
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
-                    )),
+                    ),
+                    ),
               ),
-            ))
+            ),
+            )
       ]),
     );
   }
